@@ -35,9 +35,18 @@ class BaseModel:
             print(f"Failed to save model: {e}")
 
     def __str__(self):
-        """Returns a string representation of the instance"""
+        """Returns a string representation of the instance with ordered keys"""
         cls = type(self).__name__
-        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
+        return (
+            '[{}] ({}) {{\'name\': \'{}\', \'created_at\': {}, '
+            '\'id\': \'{}\'}}'.format(
+                cls,
+                self.id,
+                self.name,
+                repr(self.created_at),
+                self.id
+            )
+        )
 
     # def save(self):
     #     """Updates updated_at with current time when instance is changed"""
