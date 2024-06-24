@@ -27,7 +27,7 @@ another_state = State()
 another_state.name = "Nevada"
 fs.new(another_state)
 fs.save()
-print("Another State: {}".format(another_state))    
+print("Another State: {}".format(another_state))
 
 # Delete the new State
 fs.delete(new_state)
