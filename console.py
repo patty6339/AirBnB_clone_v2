@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from sqlalchemy import create_engine
 
 
 class HBNBCommand(cmd.Cmd):
