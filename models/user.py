@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """ holds class User"""
 import models
 from models.base_model import BaseModel, Base
@@ -6,6 +7,13 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+=======
+"""
+This module defines a class User that inherits from BaseModel and Base
+"""
+from sqlalchemy import Column, String
+from models.base_model import BaseModel, Base
+>>>>>>> 019c25d87970c2c4460bd62fa3f0d5f38d07a4e5
 
 
 class User(BaseModel, Base):
