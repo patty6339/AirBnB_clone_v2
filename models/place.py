@@ -5,9 +5,13 @@ from models.base_model import BaseModel
 
 class Place(BaseModel):
     """ A place to stay """
-    city_id = ""
-    user_id = ""
-    name = ""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.city_id = ""
+        self.user_id = ""
+        self.name = ""
+        self.amenity_ids = []
+
     description = ""
     number_rooms = 0
     number_bathrooms = 0
@@ -15,4 +19,4 @@ class Place(BaseModel):
     price_by_night = 0
     latitude = 0.0
     longitude = 0.0
-    amenity_ids = []
+        
