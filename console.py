@@ -117,6 +117,66 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
+    # def do_create(self, args):
+    #     """ Create an object of any class with given parameters"""
+    #     args = args.split()
+    #     if not args:
+    #         print("** class name missing **")
+    #         return
+    #     elif args[0] not in HBNBCommand.classes:
+    #         print("** class doesn't exist **")
+    #         return
+    #     new_instance = HBNBCommand.classes[args[0]]()  # Corrected index access
+    #     for arg in args[1:]:
+    #         key_value = arg.split('=')
+    #         if len(key_value) != 2:
+    #             continue
+    #         key, value = key_value
+    #         try:
+    #             if value[0] == value[-1] == '"':
+    #                 value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+    #             elif '.' in value:
+    #                 value = float(value)
+    #             else:
+    #                 value = int(value)
+    #         except ValueError:
+    #             continue
+    #         setattr(new_instance, key, value)
+    #     storage.save()
+    #     print(new_instance.id)
+    #     storage.save()
+
+            
+    # def do_create(self, args):
+    #     """ Create an object of any class with given parameters"""
+    #     args = args.split()
+    #     if not args:
+    #         print("** class name missing **")
+    #         return
+    #     elif args[0] not in HBNBCommand.classes:
+    #         print("** class doesn't exist **")
+    #         return
+    #     new_instance = HBNBCommand.classes[args[0]]()
+    #     for arg in args[1:]:
+    #         key_value = arg.split('=')
+    #         if len(key_value) != 2:
+    #             continue
+    #         key, value = key_value
+    #         try:
+    #             if value[0] == value[-1] == '"':
+    #                 value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+    #             elif '.' in value:
+    #                 value = float(value)
+    #             else:
+    #                 value = int(value)
+    #         except ValueError:
+    #             continue
+    #         setattr(new_instance, key, value)
+        
+    #     storage.save()
+    #     print(new_instance.id)
+    #     storage.save()
+
     def do_create(self, args):
         """ Create an object of any class with given parameters"""
         args = args.split()
@@ -142,10 +202,12 @@ class HBNBCommand(cmd.Cmd):
             except ValueError:
                 continue
             setattr(new_instance, key, value)
+        
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
+         
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
