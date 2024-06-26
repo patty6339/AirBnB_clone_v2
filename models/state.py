@@ -10,16 +10,15 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """ Representation of State """
+    """Representation of state """
+    if models.storage_type == "db":
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", backref="state")
+    else:
+        name = ""
+
     def __init__(self, *args, **kwargs):
-        if models.storage_type == "db":
-            __tablename__ = 'states'
-            name = Column(String(128), nullable=False)
-        cities = relationship(
-            "City",
-            cascade="all, delete-orphan",
-            backref="state"
-        )
         """initializes state"""
         super().__init__(*args, **kwargs)
 

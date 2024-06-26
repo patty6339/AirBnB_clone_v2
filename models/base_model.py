@@ -1,27 +1,28 @@
+
 #!/usr/bin/python3
 """
-Contains class BaseModel1
+Contains class BaseModel
 """
-import uuid
+
+from datetime import datetime
 import models
 from os import getenv
 import sqlalchemy
-from datetime import datetime
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
-if models.storage_type == "db":
+if models.storage == "db":
     Base = declarative_base()
-else: 
+else:
     Base = object
 
 
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
-
-    if models.storage_type == "db":
+    if models.storage == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
@@ -46,14 +47,14 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = self.created_at
-        
-        def __str__(self):
-            """String representation of the BaseModel class"""
+
+    def __str__(self):
+        """String representation of the BaseModel class"""
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
                                          self.__dict__)
 
     def save(self):
-        """Updates the attribute 'updated_at' with the current datetime"""
+        """updates the attribute 'updated_at' with the current datetime"""
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
@@ -71,5 +72,5 @@ class BaseModel:
         return new_dict
 
     def delete(self):
-        """Delete the current instance from storage"""
+        """delete the current instance from the storage"""
         models.storage.delete(self)
