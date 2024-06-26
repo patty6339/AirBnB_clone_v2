@@ -7,10 +7,12 @@ import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+storage_type = getenv('HBNB_TYPE_STORAGE')
+
 
 class Amenity(BaseModel, Base):
     """Representation of Amenity """
-    if models.storage == 'db':
+    if storage_type == 'db':
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
     else:
