@@ -8,11 +8,12 @@ import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+from sqlalchemy import Column, String
+from models.base_model import BaseModel, Base
+
 """
 This module defines a class User that inherits from BaseModel and Base
 """
-from sqlalchemy import Column, String
-from models.base_model import BaseModel, Base
 
 
 class User(BaseModel, Base):

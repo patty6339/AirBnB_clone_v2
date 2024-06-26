@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 Contains class BaseModel
@@ -14,7 +13,9 @@ import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
-if models.storage == "db":
+storage_type = getenv('HBNB_TYPE_STORAGE')
+
+if storage_type == "db":
     Base = declarative_base()
 else:
     Base = object
@@ -22,7 +23,7 @@ else:
 
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
-    if models.storage == "db":
+    if storage_type == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
