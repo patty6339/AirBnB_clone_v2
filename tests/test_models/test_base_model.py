@@ -6,6 +6,7 @@ import datetime
 from uuid import UUID
 import json
 import os
+import models
 
 
 class test_basemodel(unittest.TestCase):
@@ -18,17 +19,29 @@ class test_basemodel(unittest.TestCase):
         self.value = BaseModel
 
     def setUp(self):
-        """ """
-        pass
+        """Set up method for tests"""
+        if models.storage_t == 'db':
+            from sqlalchemy import create_engine
+            from sqlalchemy.orm import scoped_session, sessionmaker
 
-    # def tearDown(self):
-    #     try:
-    #         os.remove('file.json')
-    #     except:
-    #         pass
+            self.engine = create_engine('sqlite:///:memory:', echo=False)
+            self.Session = scoped_session(sessionmaker(bind=self.engine))
+            Base.metadata.create_all(self.engine)
+            models.storage._DBStorage__session = self.Session
+
+    def tearDown(self):
+        """Tear down method for tests"""
+        if models.storage_t == 'db':
+            Base.metadata.drop_all(self.engine)
+            models.storage._DBStorage__session.remove()
+            models.storage._DBStorage__session = None
+        try:
+            os.remove('file.json')
+        except FileNotFoundError:
+            pass
 
     def test_default(self):
-        """ """
+        """Test default instantiation"""
         i = self.value()
         self.assertEqual(type(i), self.value)
 
@@ -48,13 +61,18 @@ class test_basemodel(unittest.TestCase):
             new = BaseModel(**copy)
 
     def test_save(self):
-        """ Testing save """
+        """Testing save"""
         i = self.value()
         i.save()
         key = self.name + "." + i.id
-        with open('file.json', 'r') as f:
-            j = json.load(f)
-            self.assertEqual(j[key], i.to_dict())
+        if models.storage_t == 'file':
+            with open('file.json', 'r') as f:
+                j = json.load(f)
+                self.assertEqual(j[key], i.to_dict())
+        else:
+            db_session = models.storage._DBStorage__session
+            db_obj = db_session.query(BaseModel).filter_by(id=i.id).first()
+            self.assertIsNotNone(db_obj)
 
     def test_str(self):
         """ """
