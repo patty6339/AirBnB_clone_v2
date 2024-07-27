@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # #!/usr/bin/python3
 # """
@@ -75,6 +76,8 @@
 #         """delete the current instance from the storage"""
 #         models.storage.delete(self)
 
+=======
+>>>>>>> 8f4da2bf40f7ad16af3606d9e68c62341d2b008e
 #!/usr/bin/python3
 """
 Contains class BaseModel
@@ -90,7 +93,13 @@ import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
+<<<<<<< HEAD
 if models.storage_type == "db":
+=======
+storage_type = getenv('HBNB_TYPE_STORAGE')
+
+if storage_type == "db":
+>>>>>>> 8f4da2bf40f7ad16af3606d9e68c62341d2b008e
     Base = declarative_base()
 else:
     Base = object
@@ -98,6 +107,13 @@ else:
 
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
+<<<<<<< HEAD
+=======
+    if storage_type == "db":
+        id = Column(String(60), primary_key=True)
+        created_at = Column(DateTime, default=datetime.utcnow)
+        updated_at = Column(DateTime, default=datetime.utcnow)
+>>>>>>> 8f4da2bf40f7ad16af3606d9e68c62341d2b008e
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""

@@ -22,4 +22,3 @@ class Place(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes place"""
         super().__init__(*args, **kwargs)
-        
